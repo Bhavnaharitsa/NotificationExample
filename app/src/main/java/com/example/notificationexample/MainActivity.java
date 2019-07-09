@@ -24,21 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationChannel nc=new NotificationChannel(channel_id,channel_name, NotificationManager.IMPORTANCE_DEFAULT);
-            nc.setDescription(channel_id);
-            NotificationManager nm=getSystemService(NotificationManager.class);
-            nm.createNotificationChannel(nc);
-        }
-        findViewById(R.id.NotifyButton).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        displaynotifs();
-                    }
-                }
-        );
-
+       
         notificationManager = NotificationManagerCompat.from(this);
 
 
@@ -55,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
         notificationManagerCompat.notify(3,notifbuilder);
     }
+    
+    public void CreateNotificationChannel()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    // Create the NotificationChannel
+    val name = getString(R.string.channel_name)
+    val descriptionText = getString(R.string.channel_description)
+    val importance = NotificationManager.IMPORTANCE_DEFAULT
+    val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+    mChannel.description = descriptionText
+    // Register the channel with the system; you can't change the importance
+    // or other notification behaviors after this
+    val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.createNotificationChannel(mChannel)
+}
 
+    }
 
 }
